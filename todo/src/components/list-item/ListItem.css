@@ -106,6 +106,9 @@
         margin-left: 43px;
         text-align: center;
     }
+    .list-item .checkbox-icon{
+        top: 35%;
+    }
 }
 @media screen and (max-width: 320px) {
     .list-item{
