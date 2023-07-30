@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import ListItem from './components/list-item/ListItem';
+import AddListItem from './components/add-list-item/AddListItem';
 
 const todoList : {mission: string, date: string, isDone: boolean}[] = [
   {
@@ -30,6 +31,7 @@ function App() {
   return (
     <div className="app">
       <h1>Todo List</h1>
+      <AddListItem />
       <ul className='todo-list'>
       {
         todoList.map((item, i) => (<ListItem {...item} key={i}></ListItem>))

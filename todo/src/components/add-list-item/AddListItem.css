@@ -1,0 +1,18 @@
+.add-list-item{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding-bottom: 5px;
+    border-bottom: 3px solid black;
+}
+.add-list-item .add-button{
+    font-size: 2rem;
+    cursor: pointer;
+    margin-right: 16px;
+}
+.add-list-item input{
+    font-size: 1.5rem;
+    font-weight: bold;
+    outline: none;
+    border: none;
+}
