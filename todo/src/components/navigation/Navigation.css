@@ -1,0 +1,25 @@
+.nav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 300px;
+    margin: 30px 20px;
+}
+.nav .nav-item{
+    padding: 10px 20px;
+    font-weight: bold;
+    width: 60px;
+    text-align: center;
+    cursor: pointer;
+    border-bottom: 1px solid black;
+}
+.nav .indicator{
+    position: absolute;
+    width: 100px;
+    height: 5px;
+    bottom: 0;
+    background-color: black;
+    transition: left 0.5s ease-in-out;
+    left: 0;
+}

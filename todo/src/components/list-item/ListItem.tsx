@@ -7,19 +7,16 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 interface ListItemProps {
   todoitem: {mission: string, date: string, isDone: boolean, id: number};
   onDelete: () => void;
+  onUpdate: (item: {mission: string, id: number, isDone: boolean, date: string}) => void;
 }
 
-function ListItem({todoitem, onDelete } : ListItemProps) {
+function ListItem({todoitem, onDelete, onUpdate } : ListItemProps) {
   const[todo, setTodo] = useState(todoitem);
   const[isUpdate, setUpdate] = useState(false);
 
-  useEffect(() => {
-    localStorage.setItem(`${todo.id}`, JSON.stringify(todo));
-  }, [todo]);
-
   return (
     <li className="list-item">
-      <input type="checkbox" checked={todo.isDone} onChange={() => setTodo({...todo, isDone: !todo.isDone})}/>
+      <input type="checkbox" checked={todo.isDone} onChange={() => {setTodo({...todo, isDone: !todo.isDone}); onUpdate({...todo, isDone: !todo.isDone}); }}/>
       <FontAwesomeIcon className='checkbox-icon' icon={faCheck} />
     {
     isUpdate ?
