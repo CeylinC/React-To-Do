@@ -12,7 +12,12 @@ function AddListItem( {onCreate} : IPropType) {
 
     return (
     <div className="add-list-item">
-        <FontAwesomeIcon icon={faPlus} className='add-button' onClick={() => {onCreate(addListItem(inp.current?.value!)!)}} />
+        <FontAwesomeIcon icon={faPlus} className='add-button' onClick={() => {
+                if(inp.current !== null){
+                    onCreate(addListItem(inp.current.value!)!);
+                    inp.current.value = "";
+                }
+            }} />
         <input type="text" placeholder='New Item' ref={inp} />
     </div>
     );
@@ -33,7 +38,6 @@ function findLastKey() : number {
             max = parseInt(localStorage.key(i)!);
         }
     }
-    console.log(max);
     return max + 1;
 }
 

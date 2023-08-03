@@ -13,7 +13,6 @@ function App() {
 	}, []);
 
   useEffect(() => {
-    console.log("aa");
       todoArray.map((item, index) => (
         <ListItem todoitem={item} key={item.id} onDelete={() => deleteTodoItem(index, item.id,)}/>
   ))}, [todoArray]);
