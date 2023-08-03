@@ -1,12 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ListItem.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan, faPenToSquare } from '@fortawesome/free-regular-svg-icons';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
-function ListItem(todoitem : {mission: string, date: string, isDone: boolean}) {
+interface ListItemProps {
+  todoitem: {mission: string, date: string, isDone: boolean, id: number};
+  onDelete: () => void;
+}
+
+function ListItem({todoitem, onDelete } : ListItemProps) {
   const[todo, setTodo] = useState(todoitem);
   const[isUpdate, setUpdate] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem(`${todo.id}`, JSON.stringify(todo));
+  }, [todo]);
 
   return (
     <li className="list-item">
@@ -23,7 +32,7 @@ function ListItem(todoitem : {mission: string, date: string, isDone: boolean}) {
     }
     <div className="list-item-date">{todo.date}</div>
     <ul className="list-item-menu">
-        <li className="menu-item"><FontAwesomeIcon icon={faTrashCan} /></li>
+        <li className="menu-item"><FontAwesomeIcon icon={faTrashCan} onClick={onDelete}/></li>
         <li className="menu-item" onClick={() => setUpdate(true)}><FontAwesomeIcon icon={faPenToSquare} /></li>
     </ul>
     </li>
