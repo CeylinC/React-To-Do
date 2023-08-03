@@ -1,12 +1,12 @@
 import './Navigation.css';
 import React, { useRef, useState } from 'react';
+
 interface IPropType{
     changeDisplay : (displayType: string) => void;
 }
 
 function Navigation( {changeDisplay} : IPropType) {
     const navElement = useRef<HTMLDivElement>(null);
-    
     const [indicatorPosition, setIndicatorPosition] = useState<number>();
     
     const handleClick = (event : any) =>{

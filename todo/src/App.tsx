@@ -3,15 +3,18 @@ import './App.css';
 import ListItem from './components/list-item/ListItem';
 import AddListItem from './components/add-list-item/AddListItem';
 import Navigation from './components/navigation/Navigation';
+import { ITodo } from './interface/ITodo';
+
+
 let display = "All";
 
 function App() {
-  let [todoArray, setTodoArray] = useState<{mission: string, id: number, isDone: boolean, date: string}[]>([]);
-  let [displayArray, setDisplayArray] = useState<{mission: string, id: number, isDone: boolean, date: string}[]>([])
+  let [todoArray, setTodoArray] = useState<ITodo[]>([]);
+  let [displayArray, setDisplayArray] = useState<ITodo[]>([])
 
   useEffect(() => {
 		for(let i = 0; i < localStorage.length; i++){
-      setTodoArray((prev) => [...prev, JSON.parse(localStorage.getItem(localStorage.key(i)!)!)]);
+        setTodoArray((prev) => [...prev, JSON.parse(localStorage.getItem(localStorage.key(i)!)!)]);
     }
 	}, []);
 
@@ -30,42 +33,33 @@ function App() {
     localStorage.removeItem(`${id}`);
   }
 
-  const createTodoItem = (item : {mission: string, id: number, isDone: boolean, date: string}) => {
+  const createTodoItem = (item : ITodo) => {
     setTodoArray([...todoArray, item]);
   }
 
-  const UpdateTodoItem = (item : {mission: string, id: number, isDone: boolean, date: string}) => {
+  const UpdateTodoItem = (item : ITodo) => {
     localStorage.setItem(`${item.id}`, JSON.stringify(item));
-    let asd = todoArray.map((i) => {
+    let tempArray = todoArray.map((i) => {
       if(i.id === item.id){
         return item;
       }
       return i;
     });
-    setTodoArray(asd);
+    setTodoArray(tempArray);
   }
   
   const displayTypeTodoItem = (displayType : string) => {
     display = displayType;
-    console.log(display);
     switch (display){
       case "All":
         setDisplayArray(todoArray);
         break;
       case "Done":
-        setDisplayArray(todoArray.filter(function(item){
-          if(item.isDone === true){
-            return true;
-          }
-        }));
+        setDisplayArray(todoArray.filter((item) => item.isDone));
         break;
-        case "Undone":
-          setDisplayArray(todoArray.filter(function(item){
-            if(item.isDone !== true){
-              return true;
-            }
-          }));
-          break;
+      case "Undone":
+        setDisplayArray(todoArray.filter((item) => !item.isDone));
+        break;
     }
   }
 
@@ -75,14 +69,14 @@ function App() {
       <div className='navigation'>
         <Navigation changeDisplay={(displayType: string) => displayTypeTodoItem(displayType)}/>
       </div>
-      <AddListItem onCreate={(item : {mission: string, id: number, isDone: boolean, date: string}) => createTodoItem(item)}/>
+      <AddListItem onCreate={(item : ITodo) => createTodoItem(item)}/>
       <ul className='todo-list'>
         {
           displayArray.map((item, index) => (
               <ListItem
                 todoitem={item} key={item.id}
                 onDelete={() => deleteTodoItem(index, item.id)}
-                onUpdate={(item : {mission: string, id: number, isDone: boolean, date: string}) => UpdateTodoItem(item)}/>
+                onUpdate={(item : ITodo) => UpdateTodoItem(item)}/>
       ))}
       </ul>
     </div>

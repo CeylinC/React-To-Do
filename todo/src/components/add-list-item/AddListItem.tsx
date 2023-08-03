@@ -2,9 +2,10 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useRef } from 'react';
 import './AddListItem.css';
+import { ITodo } from '../../interface/ITodo';
 
 interface IPropType {
-    onCreate: (item: {mission: string, id: number, isDone: boolean, date: string}) => void
+    onCreate: (item: ITodo) => void;
 }
 
 function AddListItem( {onCreate} : IPropType) {
