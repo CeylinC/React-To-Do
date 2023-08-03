@@ -1,34 +1,44 @@
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import './AddListItem.css';
 
-function AddListItem() {
+interface IPropType {
+    onCreate: (item: {mission: string, id: number, isDone: boolean, date: string}) => void
+}
+
+function AddListItem( {onCreate} : IPropType) {
     let inp = useRef<HTMLInputElement>(null);
 
     return (
     <div className="add-list-item">
-        <FontAwesomeIcon icon={faPlus} className='add-button' onClick={() => addListItem(inp.current?.value)} />
+        <FontAwesomeIcon icon={faPlus} className='add-button' onClick={() => {
+                if(inp.current !== null){
+                    onCreate(addListItem(inp.current.value!)!);
+                    inp.current.value = "";
+                }
+            }} />
         <input type="text" placeholder='New Item' ref={inp} />
     </div>
     );
 }
 
-function addListItem(value: string | undefined){
+function addListItem(value: string){
     if(value !== "") {
-        localStorage.setItem(findLastKey(), JSON.stringify({ mission: value, isDone: false, date: getDate()}));
+        let id = findLastKey();
+        localStorage.setItem(`${id}`, JSON.stringify({ mission: value, isDone: false, date: getDate(), id: id}));
+        return { mission: value, isDone: false, date: getDate(), id: id};
     }
 }
 
-function findLastKey() : string {
+function findLastKey() : number {
     let max = 0;
     for (let i = 0; i < localStorage.length; i++) {
         if (parseInt(localStorage.key(i)!) > max) {
             max = parseInt(localStorage.key(i)!);
         }
     }
-    console.log(max);
-    return `${max + 1}`;
+    return max + 1;
 }
 
 function getDate() : string{
