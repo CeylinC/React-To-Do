@@ -12,11 +12,6 @@ function App() {
     }
 	}, []);
 
-  useEffect(() => {
-      todoArray.map((item, index) => (
-        <ListItem todoitem={item} key={item.id} onDelete={() => deleteTodoItem(index, item.id,)}/>
-  ))}, [todoArray]);
-
   const deleteTodoItem = (index: number, id: number) => {
     setTodoArray((prev) => {
       const updateArray = [...prev];
