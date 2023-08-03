@@ -5,6 +5,13 @@ h1{
     text-align: center;
     font-size: 3rem;
 }
+h1::first-letter,
+h1 div::first-letter{
+    font-size: 4rem;
+}
+h1 div{
+    display: inline-block;
+}
 .navigation{
     width: 100%;
     display: flex;
@@ -12,4 +19,10 @@ h1{
 }
 .todo-list{
     padding: 0;
+}
+.todo-list > *{
+    transition: transform 0.25s ease-out;
+}
+.todo-list > *:hover{
+    transform: scale(0.97);
 }

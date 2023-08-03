@@ -1,3 +1,11 @@
+@keyframes rotateAnim{
+    from{
+        transform: rotateX(90deg);
+    }
+    to{
+        transform: rotateX(0deg);
+    }
+}
 .list-item{
     display: flex;
     background-color: black;
@@ -8,6 +16,7 @@
     border-radius: 5px;
     height: 64px;
     position: relative;
+    animation: rotateAnim 0.75s ease-in-out;
 }
 .list-item input[type="checkbox"]{
     margin: 0 10px;
@@ -35,6 +44,9 @@
 }
 .list-item input[type="checkbox"]:checked ~ .checkbox-icon{
     color: #00ff08;
+}
+.list-item input[type="checkbox"]:checked ~ .list-item-text{
+    text-decoration: line-through;
 }
 .list-item .list-item-text,
 .list-item .text-update {

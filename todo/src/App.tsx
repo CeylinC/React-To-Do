@@ -71,7 +71,7 @@ function App() {
 
   return (
     <div className="app">
-      <h1>Todo List</h1>
+      <h1>Todo <div>List</div></h1>
       <div className='navigation'>
         <Navigation changeDisplay={(displayType: string) => displayTypeTodoItem(displayType)}/>
       </div>
