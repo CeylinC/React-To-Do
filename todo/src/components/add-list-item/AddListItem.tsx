@@ -6,10 +6,23 @@ import { ITodo } from '../../interface/ITodo';
 
 interface IPropType {
     onCreate: (item: ITodo) => void;
+    id: number;
 }
 
-function AddListItem( {onCreate} : IPropType) {
+function AddListItem( {onCreate, id} : IPropType) {
     const [mission, setMission] = useState<string>("");
+
+    function addListItem(value: string){
+        if(value !== "") {
+            return { mission: value, isDone: false, date: getDate(), id: id};
+        }
+    }
+    
+    function getDate() : string{
+        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const today = new Date();
+        return `${today.getDate()} ${months[today.getMonth()]} ${today.getFullYear()}`;
+    }
 
     return (
     <div className="add-list-item">
@@ -25,30 +38,6 @@ function AddListItem( {onCreate} : IPropType) {
         <input type="text" placeholder='New Item' onChange={(event) => setMission(event.target.value)} value={mission}/>
     </div>
     );
-}
-
-function addListItem(value: string){
-    if(value !== "") {
-        let id = findLastKey();
-        localStorage.setItem(`${id}`, JSON.stringify({ mission: value, isDone: false, date: getDate(), id: id}));
-        return { mission: value, isDone: false, date: getDate(), id: id};
-    }
-}
-
-function findLastKey() : number {
-    let max = 0;
-    for (let i = 0; i < localStorage.length; i++) {
-        if (parseInt(localStorage.key(i)!) > max) {
-            max = parseInt(localStorage.key(i)!);
-        }
-    }
-    return max + 1;
-}
-
-function getDate() : string{
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    const today = new Date();
-    return `${today.getDate()} ${months[today.getMonth()]} ${today.getFullYear()}`;
 }
 
 export default AddListItem;
