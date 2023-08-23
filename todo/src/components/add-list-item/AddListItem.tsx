@@ -1,6 +1,6 @@
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 import './AddListItem.css';
 import { ITodo } from '../../interface/ITodo';
 
@@ -9,17 +9,20 @@ interface IPropType {
 }
 
 function AddListItem( {onCreate} : IPropType) {
-    let inp = useRef<HTMLInputElement>(null);
+    const [mission, setMission] = useState<string>("");
 
     return (
     <div className="add-list-item">
         <FontAwesomeIcon icon={faPlus} className='add-button' onClick={() => {
-                if(inp.current !== null){
-                    onCreate(addListItem(inp.current.value!)!);
-                    inp.current.value = "";
+                if(mission.trimStart().length > 0) {
+                    const todo = addListItem(mission);
+                    if(todo !== undefined){
+                        onCreate(todo);
+                        setMission("");
+                    }
                 }
             }} />
-        <input type="text" placeholder='New Item' ref={inp} />
+        <input type="text" placeholder='New Item' onChange={(event) => setMission(event.target.value)} value={mission}/>
     </div>
     );
 }
